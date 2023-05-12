@@ -6,11 +6,104 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class='naver-brand text-white', href="/"><h4 class="my-auto">Bookers</h4></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#NavMenu" aria-controls="NavMenu" aria-expanded="false" area-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="NavMenu">
+            <ul class="navbar-nav ml-auto">
+
+              <% if user_signed_in? %>
+                <li>
+                  <%= link_to user_path(current_user.id), class: "nav-link text-white" do %>
+                    <i class="fas fa-home" style="color: #ffffff;"></i>
+                    Home
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to users_path, class: "nav-link text-white" do %>
+                    <i class="fas fa-users" style="color: #ffffff;"></i>
+                    Users
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to books_path, class: "nav-link text-white" do %>
+                    <i class="fas fa-book-open" style="color: #ffffff;"></i>
+                    Books
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to destroy_user_session_path, method: :delete, class: "nav-link text-white" do %>
+                    <i class="fas fa-sign-out-alt" style="color: #ffffff;"></i>
+                    Log out
+                  <% end %>
+                </li>
+
+              <% else %>
+                <li>
+                  <%= link_to root_path, class: "nav-link text-white" do %>
+                    <i class="fas fa-home" style="color: #ffffff;"></i>
+                    Home
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to about_path, class: "nav-link text-white" do %>
+                    <i class="fas fa-link" style="color: #ffffff;"></i>
+                    About
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to new_user_registration_path, class: "nav-link text-white" do %>
+                    <i class="fas fa-user-plus" style="color: #ffffff;"></i>
+                    Sign up
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to new_user_session_path, class: "nav-link text-white" do %>
+                    <i class="fas fa-sign-in-alt" style="color: #ffffff;"></i>
+                    Log in
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mt-3">
+
+      <% flash.each do |mt, m| %>
+        <p><%= m %></p>
+      <% end %>
+      <div class="container">
+        <div class="row">
+          <%= yield %>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container mt-4">
+        <div class="row">
+          <div class="mx-auto">
+            <p>CopyRight Infratop.inc</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
   </body>
 </html>
