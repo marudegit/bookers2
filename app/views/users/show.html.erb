@@ -7,22 +7,35 @@
         <th></th>
         <th>Title</th>
         <th>Body</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @books.each do |book| %>
         <tr>
-            <td>
-              <%= link_to user_path(book.user_id) do %>
-                <%= image_tag book.user.get_profile_image(80,80) %>
+          <td>
+            <%= link_to user_path(book.user_id) do %>
+              <%= image_tag book.user.get_profile_image(80,80) %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to book_path(book.id) do %>
+              <%= book.title %>
+            <% end %>
+          </td>
+          <td>
+            <% if book.favorited_by?(current_user) %>
+              <%= link_to book_favorites_path(book.id), method: :delete do %>
+                <i class="fas fa-heart" style="color: #ff0000;"></i><%= book.favorites.count %>
               <% end %>
-            </td>
-            <td>
-              <%= link_to book_path(book.id) do %>
-                <%= book.title %>
+            <% else %>
+              <%= link_to book_favorites_path(book.id), method: :post do %>
+                <i class="fas fa-heart" style="color: #0000ff;"></i><%= book.favorites.count %>
               <% end %>
-            </td>
+            <% end %>
+          </td>
           <td><%= book.body %></td>
+          <td>コメント数: <%= book.book_comments.count %></td>
         </tr>
       <% end %>
 

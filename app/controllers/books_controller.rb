@@ -26,6 +26,8 @@ class BooksController < ApplicationController
     @newbook = Book.new
     @book = Book.find(params[:id])
     @user = @book.user
+    @book_comment = BookComment.new
+    @book_comments = BookComment.all
   end
 
   def edit
@@ -53,13 +55,6 @@ class BooksController < ApplicationController
   private
   def book_params
     params.require(:book).permit(:title, :body)
-  end
-
-  def is_matching_login_user
-    user = User.find(params[:id])
-    unless user.id == current_user.id
-      redirect_to book_path(book.id)
-    end
   end
 
   def is_matching_login_user

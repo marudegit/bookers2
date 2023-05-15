@@ -20,6 +20,8 @@
         <th></th>
         <th>Title</th>
         <th>Body</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
 
@@ -37,6 +39,18 @@
             <% end %>
           </td>
           <td><%= book.body %></td>
+          <td>
+            <% if book.favorited_by?(@user) %>
+              <%= link_to book_favorites_path(book.id), method: :delete do %>
+                <i class="fas fa-heart" style="color: #ff0000;"></i><%= book.favorites.count %>
+              <% end %>
+            <% else %>
+              <%= link_to book_favorites_path(book.id), method: :post do %>
+                <i class="fas fa-heart" style="color: #0000ff;"></i><%= book.favorites.count %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>コメント数: <%= book.book_comments.count %></td>
         </tr>
        <% end %>
     </tbody>
